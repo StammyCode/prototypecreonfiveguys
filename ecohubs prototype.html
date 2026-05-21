@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Eco Hub — Monetize Your Waste</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --green-900: #0a2e1a;
+    --green-800: #14532d;
+    --green-700: #166534;
+    --green-600: #16a34a;
+    --green-500: #22c55e;
+    --green-400: #4ade80;
+    --green-300: #86efac;
+    --green-200: #bbf7d0;
+    --green-100: #dcfce7;
+    --green-50: #f0fdf4;
+    --cream: #faf8f2;
+    --earth: #7c6d5a;
+    --dark: #1a1a14;
+    --text: #2d2d24;
+    --muted: #6b6b5a;
+    --accent: #e8f5a0;
+    --accent2: #b5e48c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 3rem;
+    height: 64px;
+    background: rgba(250,248,242,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(22,163,74,0.12);
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.35rem;
+    color: var(--green-800);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .logo-dot { width: 10px; height: 10px; background: var(--green-500); border-radius: 50%; display: inline-block; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.875rem; font-weight: 500;
+    color: var(--muted); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--green-700); }
+  .nav-cta {
+    background: var(--green-700); color: #fff;
+    padding: 0.5rem 1.25rem; border-radius: 2rem;
+    font-size: 0.875rem; font-weight: 500;
+    text-decoration: none; transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--green-800); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 6rem 3rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 65% 40%, #d4edda 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--green-100); border: 1px solid var(--green-300);
+    color: var(--green-800); border-radius: 2rem;
+    padding: 0.3rem 0.9rem; font-size: 0.8rem; font-weight: 500;
+    margin-bottom: 1.5rem; width: fit-content;
+  }
+  .hero-tag::before { content: '♻'; font-size: 0.9rem; }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(3rem, 7vw, 6rem);
+    font-weight: 800;
+    line-height: 1.0;
+    color: var(--dark);
+    max-width: 760px;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--green-600);
+  }
+  .hero p {
+    font-size: 1.125rem;
+    color: var(--muted);
+    max-width: 520px;
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+  }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--green-700); color: #fff;
+    padding: 0.85rem 2rem; border-radius: 2rem;
+    font-size: 0.95rem; font-weight: 500;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: all 0.2s; display: inline-block;
+  }
+  .btn-primary:hover { background: var(--green-800); transform: translateY(-1px); }
+  .btn-outline {
+    background: transparent; color: var(--green-700);
+    padding: 0.85rem 2rem; border-radius: 2rem;
+    font-size: 0.95rem; font-weight: 500;
+    border: 1.5px solid var(--green-600);
+    text-decoration: none; cursor: pointer;
+    transition: all 0.2s; display: inline-block;
+  }
+  .btn-outline:hover { background: var(--green-50); }
+
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-top: 4rem;
+    border-top: 1px solid rgba(22,163,74,0.15);
+    border-left: 1px solid rgba(22,163,74,0.15);
+    border-radius: 1rem;
+    overflow: hidden;
+    width: fit-content;
+  }
+  .stat-item {
+    padding: 1.25rem 2rem;
+    border-right: 1px solid rgba(22,163,74,0.15);
+    border-bottom: 1px solid rgba(22,163,74,0.15);
+    background: rgba(255,255,255,0.5);
+    min-width: 130px;
+  }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.75rem; font-weight: 800;
+    color: var(--green-700);
+    line-height: 1;
+    margin-bottom: 0.35rem;
+  }
+  .stat-label { font-size: 0.775rem; color: var(--muted); line-height: 1.4; }
+
+  /* CATEGORIES */
+  .section { padding: 5rem 3rem; }
+  .section-label {
+    font-size: 0.75rem; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--green-600); margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700; color: var(--dark);
+    max-width: 640px; line-height: 1.15;
+    margin-bottom: 1rem;
+  }
+  .section-sub {
+    color: var(--muted); font-size: 1rem; line-height: 1.7;
+    max-width: 500px; margin-bottom: 3rem;
+  }
+
+  .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+  }
+  .cat-card {
+    background: #fff;
+    border: 1px solid rgba(22,163,74,0.12);
+    border-radius: 1rem;
+    padding: 1.5rem 1.25rem;
+    display: flex; flex-direction: column; align-items: flex-start;
+    gap: 0.75rem;
+    transition: all 0.25s;
+    cursor: default;
+  }
+  .cat-card:hover {
+    border-color: var(--green-400);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(22,163,74,0.1);
+  }
+  .cat-icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+  }
+  .cat-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 600; font-size: 0.9rem;
+    color: var(--dark);
+  }
+  .cat-sub { font-size: 0.775rem; color: var(--muted); }
+
+  /* HOW IT WORKS */
+  .how-section { background: var(--green-900); color: #fff; }
+  .how-section .section-label { color: var(--green-400); }
+  .how-section .section-title { color: #fff; max-width: 500px; }
+  .how-section .section-sub { color: rgba(255,255,255,0.6); }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 1.25rem;
+    overflow: hidden;
+  }
+  .step-item {
+    background: var(--green-900);
+    padding: 2rem 1.5rem;
+    display: flex; flex-direction: column; gap: 1rem;
+    transition: background 0.2s;
+  }
+  .step-item:hover { background: rgba(34,197,94,0.06); }
+  .step-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.75rem; font-weight: 700;
+    color: var(--green-500);
+    letter-spacing: 0.08em;
+  }
+  .step-icon { font-size: 1.75rem; }
+  .step-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 600; font-size: 1rem; color: #fff;
+  }
+  .step-desc { font-size: 0.85rem; color: rgba(255,255,255,0.55); line-height: 1.6; }
+
+  /* PACKAGES */
+  .packages-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  .package-card {
+    background: #fff;
+    border: 1px solid rgba(22,163,74,0.15);
+    border-radius: 1.5rem;
+    padding: 2rem;
+    display: flex; flex-direction: column;
+    transition: all 0.25s;
+  }
+  .package-card.featured {
+    background: var(--green-800);
+    border-color: var(--green-700);
+    color: #fff;
+  }
+  .package-card:hover:not(.featured) {
+    border-color: var(--green-400);
+    box-shadow: 0 12px 40px rgba(22,163,74,0.1);
+    transform: translateY(-2px);
+  }
+  .pkg-badge {
+    display: inline-block;
+    background: var(--green-100); color: var(--green-800);
+    font-size: 0.7rem; font-weight: 600;
+    padding: 0.25rem 0.75rem; border-radius: 2rem;
+    letter-spacing: 0.06em; margin-bottom: 1.25rem;
+    width: fit-content;
+  }
+  .featured .pkg-badge {
+    background: rgba(74,222,128,0.2); color: var(--green-300);
+  }
+  .pkg-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.5rem; font-weight: 700;
+    color: var(--dark); margin-bottom: 0.35rem;
+  }
+  .featured .pkg-title { color: #fff; }
+  .pkg-sub { font-size: 0.875rem; color: var(--muted); margin-bottom: 1.75rem; }
+  .featured .pkg-sub { color: rgba(255,255,255,0.65); }
+  .pkg-features { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; flex: 1; }
+  .pkg-features li {
+    display: flex; align-items: flex-start; gap: 0.65rem;
+    font-size: 0.875rem; color: var(--text);
+  }
+  .featured .pkg-features li { color: rgba(255,255,255,0.85); }
+  .pkg-features li::before {
+    content: '✓';
+    width: 20px; height: 20px; border-radius: 50%;
+    background: var(--green-100); color: var(--green-700);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.65rem; font-weight: 700;
+    flex-shrink: 0; margin-top: 1px;
+  }
+  .featured .pkg-features li::before {
+    background: rgba(74,222,128,0.2); color: var(--green-300);
+  }
+  .pkg-extra { font-size: 0.75rem; color: var(--muted); margin-top: 0.25rem; padding-left: 1.65rem; font-style: italic; }
+  .featured .pkg-extra { color: rgba(255,255,255,0.45); }
+  .pkg-cta {
+    margin-top: 2rem;
+    display: block; text-align: center;
+    padding: 0.85rem; border-radius: 2rem;
+    font-weight: 500; font-size: 0.9rem;
+    text-decoration: none; cursor: pointer;
+    border: none; width: 100%;
+    transition: all 0.2s;
+  }
+  .pkg-cta-light {
+    background: var(--green-50); color: var(--green-800);
+    border: 1.5px solid var(--green-300);
+  }
+  .pkg-cta-light:hover { background: var(--green-100); }
+  .pkg-cta-dark {
+    background: var(--green-400); color: var(--green-900);
+    font-weight: 600;
+  }
+  .pkg-cta-dark:hover { background: var(--green-300); }
+
+  /* CUSTOMERS */
+  .customers-section { background: var(--green-50); }
+  .customers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+  .customer-card {
+    background: #fff;
+    border: 1px solid rgba(22,163,74,0.12);
+    border-radius: 1.25rem; padding: 2rem;
+  }
+  .cust-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+  .cust-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700; font-size: 1.2rem;
+    color: var(--dark); margin-bottom: 0.5rem;
+  }
+  .cust-desc { font-size: 0.875rem; color: var(--muted); line-height: 1.65; }
+
+  /* APP PREVIEW */
+  .app-preview {
+    background: var(--dark);
+    padding: 5rem 3rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  @media (max-width: 768px) {
+    .app-preview { grid-template-columns: 1fr; }
+  }
+  .app-text .section-label { color: var(--green-400); }
+  .app-text .section-title { color: #fff; }
+  .app-text .section-sub { color: rgba(255,255,255,0.6); }
+  .app-channels {
+    display: flex; flex-direction: column; gap: 0.75rem;
+  }
+  .channel-row {
+    display: flex; align-items: center; gap: 0.75rem;
+    padding: 0.85rem 1rem;
+    background: rgba(255,255,255,0.06);
+    border-radius: 0.75rem; border: 1px solid rgba(255,255,255,0.08);
+  }
+  .channel-icon { font-size: 1.2rem; width: 36px; text-align: center; }
+  .channel-name { font-size: 0.9rem; color: rgba(255,255,255,0.85); font-weight: 500; }
+  .channel-sub { font-size: 0.775rem; color: rgba(255,255,255,0.4); margin-left: auto; }
+
+  .phone-mockup {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 2.5rem;
+    padding: 1rem;
+    max-width: 280px; margin: 0 auto;
+  }
+  .phone-inner {
+    background: #1e2e20;
+    border-radius: 2rem;
+    padding: 1.5rem 1.25rem;
+    min-height: 480px;
+  }
+  .phone-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  .phone-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1rem; color: var(--green-400); }
+  .phone-avatar { width: 28px; height: 28px; background: var(--green-700); border-radius: 50%; }
+  .phone-greeting { font-size: 0.75rem; color: rgba(255,255,255,0.5); margin-bottom: 0.2rem; }
+  .phone-name { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 1.25rem; }
+  .phone-points-card {
+    background: linear-gradient(135deg, #166534, #15803d);
+    border-radius: 1rem; padding: 1rem 1.1rem;
+    margin-bottom: 1.25rem;
+  }
+  .phone-points-label { font-size: 0.65rem; color: rgba(255,255,255,0.6); margin-bottom: 0.2rem; }
+  .phone-points-val { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; color: #fff; }
+  .phone-points-sub { font-size: 0.625rem; color: rgba(255,255,255,0.5); margin-top: 0.25rem; }
+  .phone-section-title { font-size: 0.7rem; font-weight: 600; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.65rem; }
+  .phone-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-bottom: 1.25rem; }
+  .phone-cat {
+    background: rgba(255,255,255,0.06);
+    border-radius: 0.75rem; padding: 0.65rem;
+    text-align: center;
+  }
+  .phone-cat-icon { font-size: 1.25rem; }
+  .phone-cat-name { font-size: 0.6rem; color: rgba(255,255,255,0.6); margin-top: 0.2rem; }
+  .phone-history { display: flex; flex-direction: column; gap: 0.5rem; }
+  .phone-hist-row {
+    display: flex; align-items: center; gap: 0.6rem;
+    background: rgba(255,255,255,0.04);
+    border-radius: 0.65rem; padding: 0.5rem 0.65rem;
+  }
+  .phone-hist-icon { font-size: 1rem; }
+  .phone-hist-name { font-size: 0.65rem; color: rgba(255,255,255,0.75); flex: 1; }
+  .phone-hist-pts { font-size: 0.65rem; color: var(--green-400); font-weight: 600; }
+
+  /* CTA FOOTER */
+  .cta-section {
+    text-align: center;
+    padding: 6rem 3rem;
+    background: var(--cream);
+  }
+  .cta-section .section-title { margin: 0 auto 1rem; text-align: center; }
+  .cta-section p { color: var(--muted); margin: 0 auto 2.5rem; max-width: 440px; }
+  .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .wa-btn {
+    background: #25d366; color: #fff;
+    padding: 0.85rem 2rem; border-radius: 2rem;
+    font-size: 0.95rem; font-weight: 500;
+    text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem;
+    transition: all 0.2s;
+  }
+  .wa-btn:hover { background: #1ebe5b; transform: translateY(-1px); }
+
+  footer {
+    background: var(--green-900);
+    padding: 2rem 3rem;
+    display: flex; justify-content: space-between; align-items: center;
+    color: rgba(255,255,255,0.4); font-size: 0.8rem;
+  }
+  .footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; color: var(--green-400); font-size: 1rem; }
+
+  /* FLOATING */
+  .floating-wa {
+    position: fixed; bottom: 2rem; right: 2rem; z-index: 99;
+    background: #25d366; color: #fff;
+    width: 56px; height: 56px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+    text-decoration: none; transition: all 0.2s;
+  }
+  .floating-wa:hover { transform: scale(1.1); }
+
+  /* NOTICE BANNER */
+  .notice {
+    background: var(--green-100); border-bottom: 1px solid var(--green-200);
+    padding: 0.5rem 1.5rem; text-align: center;
+    font-size: 0.8rem; color: var(--green-800); font-weight: 500;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero-tag, .hero h1, .hero p, .hero-actions, .hero-stats {
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero h1       { animation-delay: 0.08s; }
+  .hero p        { animation-delay: 0.16s; }
+  .hero-actions  { animation-delay: 0.24s; }
+  .hero-stats    { animation-delay: 0.34s; }
+</style>
+</head>
+<body>
+
+<div class="notice">⚠️ Syarat: Sampah harus sudah terpilah sebelum pengambilan &nbsp;|&nbsp; Prototype for presentation purposes</div>
+
+<nav>
+  <div class="nav-logo"><span class="logo-dot"></span>Eco Hub</div>
+  <ul class="nav-links">
+    <li><a href="#cara-kerja">Cara Kerja</a></li>
+    <li><a href="#kategori">Kategori</a></li>
+    <li><a href="#paket">Paket</a></li>
+    <li><a href="#kontak">Kontak</a></li>
+  </ul>
+  <a href="#kontak" class="nav-cta">Mulai Sekarang</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-tag">Platform Monetisasi Sampah #1</div>
+  <h1>Ubah Sampahmu<br/>jadi <em>Nilai Nyata</em></h1>
+  <p>Eco Hub hadir untuk mengurangi sampah nasional ke TPA dengan mendidik komunitas, dan membantu rumah tangga serta bisnis menghasilkan uang dari sampah daur ulang.</p>
+  <div class="hero-actions">
+    <a href="#cara-kerja" class="btn-primary">Lihat Cara Kerja</a>
+    <a href="#paket" class="btn-outline">Lihat Paket</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-num">6+</div>
+      <div class="stat-label">Kategori<br/>Sampah Diterima</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">0%</div>
+      <div class="stat-label">Sampah<br/>ke TPA</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">2×</div>
+      <div class="stat-label">Jenis<br/>Pelanggan</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">Rp ✓</div>
+      <div class="stat-label">Langsung<br/>Dibayar</div>
+    </div>
+  </div>
+</section>
+
+<!-- KATEGORI -->
+<section class="section" id="kategori">
+  <div class="section-label">Kategori Sampah</div>
+  <h2 class="section-title">Apa saja yang kami terima?</h2>
+  <p class="section-sub">Sortir sampahmu ke dalam kategori berikut sebelum penjemputan atau pengiriman ke bank sampah terdekat.</p>
+  <div class="categories-grid">
+    <div class="cat-card">
+      <div class="cat-icon" style="background:#fef9c3;">📰</div>
+      <div class="cat-name">Kertas</div>
+      <div class="cat-sub">Koran, majalah, dokumen</div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-icon" style="background:#dbeafe;">📦</div>
+      <div class="cat-name">Kardus</div>
+      <div class="cat-sub">Dus bekas, karton</div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-icon" style="background:#fee2e2;">💻</div>
+      <div class="cat-name">Elektronik</div>
+      <div class="cat-sub">Gadget, kabel, baterai</div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-icon" style="background:#fef3c7;">🛢️</div>
+      <div class="cat-name">Minyak Jelantah</div>
+      <div class="cat-sub">Minyak goreng bekas</div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-icon" style="background:#d1fae5;">🍾</div>
+      <div class="cat-name">Botol Plastik</div>
+      <div class="cat-sub">PET, HDPE, botol minum</div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-icon" style="background:#ede9fe;">👕</div>
+      <div class="cat-name">Kain</div>
+      <div class="cat-sub">Pakaian, tekstil bekas</div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section how-section" id="cara-kerja">
+  <div class="section-label">Cara Kerja</div>
+  <h2 class="section-title">Proses mudah dalam 8 langkah</h2>
+  <p class="section-sub">Dari menghubungi kami hingga sampah diproses — semua kami urus dengan transparan.</p>
+  <div class="steps-grid">
+    <div class="step-item">
+      <div class="step-num">01</div>
+      <div class="step-icon">📱</div>
+      <div class="step-title">Hubungi Kami</div>
+      <div class="step-desc">Via WhatsApp, telepon, atau aplikasi (untuk member)</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">02</div>
+      <div class="step-icon">🚚</div>
+      <div class="step-title">Pilih Layanan</div>
+      <div class="step-desc">Pilih jemput di rumah atau antar ke bank sampah</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">03</div>
+      <div class="step-icon">🏦</div>
+      <div class="step-title">Drop Off</div>
+      <div class="step-desc">Antar ke lokasi bank sampah terdekat</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">04</div>
+      <div class="step-icon">🏠</div>
+      <div class="step-title">Penjemputan</div>
+      <div class="step-desc">Tim kami datang menjemput sampahmu</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">05</div>
+      <div class="step-icon">⚖️</div>
+      <div class="step-title">Timbang Sampah</div>
+      <div class="step-desc">Sampah ditimbang untuk kalkulasi nilai</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">06</div>
+      <div class="step-icon">💵</div>
+      <div class="step-title">Terima Uang</div>
+      <div class="step-desc">Dibayar langsung sesuai berat & jenis sampah</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">07</div>
+      <div class="step-icon">✅</div>
+      <div class="step-title">Sampah Aman</div>
+      <div class="step-desc">Sampahmu diproses secara bertanggung jawab</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">08</div>
+      <div class="step-icon">🏭</div>
+      <div class="step-title">Ke Pabrik Daur Ulang</div>
+      <div class="step-desc">Dikirim ke pabrik daur ulang resmi</div>
+    </div>
+  </div>
+</section>
+
+<!-- PAKET -->
+<section class="section" id="paket">
+  <div class="section-label">Paket Layanan</div>
+  <h2 class="section-title">Pilih paket yang sesuai</h2>
+  <p class="section-sub">Tersedia untuk rumah tangga maupun bisnis — mulai tanpa keanggotaan atau upgrade untuk benefit maksimal.</p>
+  <div class="packages-grid">
+    <!-- Non-Membership -->
+    <div class="package-card">
+      <div class="pkg-badge">NON-MEMBERSHIP</div>
+      <div class="pkg-title">Pay as You Go</div>
+      <div class="pkg-sub">Cocok untuk kamu yang baru mencoba layanan Eco Hub tanpa komitmen.</div>
+      <ul class="pkg-features">
+        <li>Opsi penjemputan ke rumah</li>
+        <div class="pkg-extra">Biaya pengiriman berlaku</div>
+        <li>Monetisasi sampah</li>
+        <li>Sistem tracking poin</li>
+        <li>Sistem tracking sampah</li>
+        <li>Penukaran voucher</li>
+      </ul>
+      <a href="#kontak" class="pkg-cta pkg-cta-light">Mulai Tanpa Daftar</a>
+    </div>
+    <!-- Membership -->
+    <div class="package-card featured">
+      <div class="pkg-badge">✦ MEMBERSHIP</div>
+      <div class="pkg-title">Member Pro</div>
+      <div class="pkg-sub">Untuk rumah tangga & bisnis yang ingin layanan rutin dan benefit ekstra.</div>
+      <ul class="pkg-features">
+        <li>Opsi penjemputan ke rumah</li>
+        <li>Penjadwalan penjemputan rutin</li>
+        <li>Gratis ongkos pengiriman</li>
+        <li>Monetisasi sampah</li>
+        <li>Sistem tracking sampah</li>
+        <li>Bak sampah berlogo Eco Hub</li>
+        <li>Pilihan voucher lebih banyak</li>
+        <div class="pkg-extra">*Masih dalam pertimbangan</div>
+      </ul>
+      <a href="#kontak" class="pkg-cta pkg-cta-dark">Daftar Sekarang</a>
+    </div>
+  </div>
+</section>
+
+<!-- CUSTOMERS -->
+<section class="section customers-section">
+  <div class="section-label">Target Pelanggan</div>
+  <h2 class="section-title">Untuk siapa Eco Hub?</h2>
+  <p class="section-sub">Kami melayani rumah tangga dan bisnis yang ingin berkontribusi pada lingkungan sambil mendapatkan nilai dari sampah.</p>
+  <div class="customers-grid">
+    <div class="customer-card">
+      <div class="cust-icon">🏠</div>
+      <div class="cust-title">Residensial</div>
+      <div class="cust-desc">Rumah tangga yang ingin memilah sampah dengan mudah dan mendapatkan penghasilan tambahan dari limbah daur ulang sehari-hari.</div>
+    </div>
+    <div class="customer-card">
+      <div class="cust-icon">🏪</div>
+      <div class="cust-title">Bisnis & Retail</div>
+      <div class="cust-desc">Supermarket, toko retail, dan bisnis lainnya dengan volume sampah tinggi yang ingin penanganan limbah secara profesional dan terjadwal.</div>
+    </div>
+  </div>
+</section>
+
+<!-- APP PREVIEW -->
+<section class="app-preview" id="kontak">
+  <div class="app-text">
+    <div class="section-label">Hubungi Kami</div>
+    <h2 class="section-title" style="color:#fff;">Mulai hari ini,<br/>pilih caramu</h2>
+    <p class="section-sub">Hubungi Eco Hub melalui saluran yang paling nyaman bagimu. Tim kami siap membantu.</p>
+    <div class="app-channels">
+      <div class="channel-row">
+        <div class="channel-icon">💬</div>
+        <div class="channel-name">WhatsApp</div>
+        <div class="channel-sub">Paling cepat</div>
+      </div>
+      <div class="channel-row">
+        <div class="channel-icon">📞</div>
+        <div class="channel-name">Telepon</div>
+        <div class="channel-sub">Langsung terhubung</div>
+      </div>
+      <div class="channel-row">
+        <div class="channel-icon">📱</div>
+        <div class="channel-name">Aplikasi</div>
+        <div class="channel-sub">Khusus member</div>
+      </div>
+    </div>
+  </div>
+  <!-- Phone Mockup -->
+  <div class="phone-mockup">
+    <div class="phone-inner">
+      <div class="phone-header">
+        <div class="phone-logo">eco hub</div>
+        <div class="phone-avatar"></div>
+      </div>
+      <div class="phone-greeting">Selamat pagi,</div>
+      <div class="phone-name">Budi Santoso 👋</div>
+      <div class="phone-points-card">
+        <div class="phone-points-label">TOTAL POIN KAMU</div>
+        <div class="phone-points-val">2.450 pts</div>
+        <div class="phone-points-sub">≈ Rp 24.500 · Setara 3 voucher</div>
+      </div>
+      <div class="phone-section-title">Pilih Kategori</div>
+      <div class="phone-grid">
+        <div class="phone-cat"><div class="phone-cat-icon">📦</div><div class="phone-cat-name">Kardus</div></div>
+        <div class="phone-cat"><div class="phone-cat-icon">🍾</div><div class="phone-cat-name">Plastik</div></div>
+        <div class="phone-cat"><div class="phone-cat-icon">💻</div><div class="phone-cat-name">Elektronik</div></div>
+        <div class="phone-cat"><div class="phone-cat-icon">🛢️</div><div class="phone-cat-name">Jelantah</div></div>
+      </div>
+      <div class="phone-section-title">Riwayat Terakhir</div>
+      <div class="phone-history">
+        <div class="phone-hist-row">
+          <div class="phone-hist-icon">📦</div>
+          <div class="phone-hist-name">Kardus 3.2 kg</div>
+          <div class="phone-hist-pts">+320 pts</div>
+        </div>
+        <div class="phone-hist-row">
+          <div class="phone-hist-icon">🍾</div>
+          <div class="phone-hist-name">Botol Plastik 1.8 kg</div>
+          <div class="phone-hist-pts">+180 pts</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="section-label" style="text-align:center;">Siap Mulai?</div>
+  <h2 class="section-title">Sampahmu punya nilai.<br/>Kami bantu cairkan.</h2>
+  <p>Bergabung dengan Eco Hub dan jadi bagian dari gerakan daur ulang nasional yang memberi dampak nyata.</p>
+  <div class="cta-buttons">
+    <a href="https://wa.me/6281234567890" class="wa-btn">💬 Chat WhatsApp</a>
+    <a href="#paket" class="btn-outline">Lihat Paket Member</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Eco Hub</div>
+  <div>© 2025 Eco Hub · Monetize Your Waste · Prototype</div>
+  <div>🌿 Zero Waste Indonesia</div>
+</footer>
+
+<a href="https://wa.me/6281234567890" class="floating-wa" title="WhatsApp">💬</a>
+
+</body>
+</html>
